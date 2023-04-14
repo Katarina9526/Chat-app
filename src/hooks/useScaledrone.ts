@@ -1,12 +1,5 @@
 import { useState } from 'react';
-
-interface Message {
-	data: string | number;
-	id: string;
-	timestamp: number;
-	clientId?: string;
-	member?: object;
-}
+import { Message } from '../types/scaledrone';
 
 const useScaledrone = () => {
 	const [messages, setMessages] = useState<Message[]>([]);

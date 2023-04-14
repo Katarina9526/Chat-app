@@ -1,5 +1,7 @@
-import * as React from 'react';
+import { FormEvent } from 'react';
 import './App.css';
+import Chat from './components/chat';
+import Sidebar from './components/sidebar';
 import useScaledrone from './hooks/useScaledrone';
 
 interface FormElements extends HTMLFormControlsCollection {
@@ -13,7 +15,7 @@ interface CustomFormElement extends HTMLFormElement {
 function App() {
 	const { messages, publish } = useScaledrone();
 
-	const handleSubmit = (event: React.FormEvent<CustomFormElement>) => {
+	const handleSubmit = (event: FormEvent<CustomFormElement>) => {
 		event.preventDefault();
 
 		publish(event.currentTarget.elements.message.value);
@@ -22,21 +24,25 @@ function App() {
 
 	return (
 		<div className="App">
-			{
+			<div>
 				<div>
-					<div>
-						{messages.map((message, key) => (
-							<div key={key}>
-								<span>{message.data}</span>
-							</div>
-						))}
-					</div>
-					<form onSubmit={handleSubmit}>
-						<input name="message" />
-						<button type="submit">Send</button>
-					</form>
+					{messages.map((message, key) => (
+						<div key={key}>
+							<span>{message.data}</span>
+						</div>
+					))}
 				</div>
-			}
+				<form onSubmit={handleSubmit}>
+					<input name="message" autoComplete="off" />
+					<button type="submit">Send</button>
+				</form>
+			</div>
+			<div className="home">
+				<div className="container">
+					<Sidebar />
+					<Chat />
+				</div>
+			</div>
 		</div>
 	);
 }

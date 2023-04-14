@@ -2,9 +2,11 @@
 
 ## Usage
 
-`npm install`
+`npm install`  
 `npm run dev`
 
 ## Test Environment
-`VITE_SCALEDRONE_CHANNEL_ID = kvlduQYphaXKbsaV`
-`VITE_SCALEDRONE_ROOM_NAME = chat-room`
+```sh
+VITE_SCALEDRONE_CHANNEL_ID = kvlduQYphaXKbsaV
+VITE_SCALEDRONE_ROOM_NAME = chat-room
+```
