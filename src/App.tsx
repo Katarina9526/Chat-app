@@ -2,7 +2,7 @@ import { FormEvent } from 'react';
 import './App.css';
 import Chat from './components/chat';
 import Sidebar from './components/sidebar';
-import useScaledrone from './hooks/useScaledrone';
+import useScaledrone, { publish } from './hooks/useScaledrone';
 
 interface FormElements extends HTMLFormControlsCollection {
 	message: HTMLInputElement;
@@ -13,7 +13,7 @@ interface CustomFormElement extends HTMLFormElement {
 }
 
 function App() {
-	const { messages, publish } = useScaledrone();
+	const messages = useScaledrone();
 
 	const handleSubmit = (event: FormEvent<CustomFormElement>) => {
 		event.preventDefault();
