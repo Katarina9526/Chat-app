@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Message } from '../types/scaledrone';
+import { Drone, Message } from '../types/scaledrone';
 
 // @ts-ignore
-const drone = new Scaledrone(import.meta.env.VITE_SCALEDRONE_CHANNEL_ID);
+const drone: Drone = new Scaledrone(import.meta.env.VITE_SCALEDRONE_CHANNEL_ID);
 const room = drone.subscribe(import.meta.env.VITE_SCALEDRONE_ROOM_NAME);
 
 const useScaledrone = () => {

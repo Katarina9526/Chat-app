@@ -1,7 +1,5 @@
 import { FormEvent } from 'react';
 import './App.css';
-import Chat from './components/chat';
-import Sidebar from './components/sidebar';
 import useScaledrone, { publish } from './hooks/useScaledrone';
 
 interface FormElements extends HTMLFormControlsCollection {
@@ -36,12 +34,6 @@ function App() {
 					<input name="message" autoComplete="off" />
 					<button type="submit">Send</button>
 				</form>
-			</div>
-			<div className="home">
-				<div className="container">
-					<Sidebar />
-					<Chat />
-				</div>
 			</div>
 		</div>
 	);
