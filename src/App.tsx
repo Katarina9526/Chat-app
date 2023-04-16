@@ -1,14 +1,8 @@
 import { FormEvent } from 'react';
-import './App.css';
 import useScaledrone, { publish } from './hooks/useScaledrone';
-
-interface FormElements extends HTMLFormControlsCollection {
-	message: HTMLInputElement;
-}
-
-interface CustomFormElement extends HTMLFormElement {
-	readonly elements: FormElements;
-}
+import { Box, Button, TextField, Paper, Chip } from '@mui/material';
+import SendIcon from '@mui/icons-material/Send';
+import { CustomFormElement } from './types/formElements';
 
 function App() {
 	const messages = useScaledrone();
@@ -21,21 +15,44 @@ function App() {
 	};
 
 	return (
-		<div className="App">
-			<div>
-				<div>
+		<Box
+			minHeight="100vh"
+			display="flex"
+			justifyContent="center"
+			alignItems="center"
+			padding="16px"
+			boxSizing="border-box">
+			<Paper elevation={12}>
+				<Box
+					minHeight="600px"
+					border="1px solid rgba(0, 0, 0, 0.23)"
+					mb="16px"
+					borderRadius="16px"
+					padding="8.5px 14px"
+					display="flex"
+					flexDirection="column"
+					justifyContent="flex-end"
+					alignItems="flex-start"
+					gap="8px">
 					{messages.map((message, key) => (
-						<div key={key}>
-							<span>{message.data}</span>
-						</div>
+						<Chip key={key} label={message.data} variant="filled" color="primary" />
 					))}
-				</div>
-				<form onSubmit={handleSubmit}>
-					<input name="message" autoComplete="off" />
-					<button type="submit">Send</button>
-				</form>
-			</div>
-		</div>
+				</Box>
+				<Box component="form" display="flex" flexDirection="row" gap="8px" onSubmit={handleSubmit}>
+					<TextField
+						name="message"
+						autoComplete="off"
+						variant="outlined"
+						fullWidth
+						color="primary"
+						size="small"
+					/>
+					<Button type="submit" variant="contained" color="primary" size="large" endIcon={<SendIcon />}>
+						Send
+					</Button>
+				</Box>
+			</Paper>
+		</Box>
 	);
 }
 
