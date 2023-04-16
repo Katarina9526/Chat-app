@@ -1,5 +1,5 @@
 import { FormEvent } from 'react';
-import './App.scss';
+import './App.css';
 import Chat from './components/chat';
 import Sidebar from './components/sidebar';
 import useScaledrone, { publish } from './hooks/useScaledrone';
