@@ -10,6 +10,7 @@ export interface Drone {
 	subscribe: (roomName: string) => Room;
 	publish: (metadata: PublishMetadata) => void;
 	on: (eventKey: DroneEventKey, eventCallback: DroneEventCallback) => void;
+	clientId: string;
 }
 
 type RoomEventKey = 'message';

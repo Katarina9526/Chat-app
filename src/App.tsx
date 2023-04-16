@@ -1,6 +1,6 @@
 import { FormEvent } from 'react';
-import useScaledrone, { publish } from './hooks/useScaledrone';
-import { Box, Button, TextField, Paper, Chip } from '@mui/material';
+import useScaledrone, { drone, publish } from './hooks/useScaledrone';
+import { Box, Button, TextField, Paper, Chip, css } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import { CustomFormElement } from './types/formElements';
 
@@ -35,7 +35,13 @@ function App() {
 					alignItems="flex-start"
 					gap="8px">
 					{messages.map((message, key) => (
-						<Chip key={key} label={message.data} variant="filled" color="primary" />
+						<Chip
+							key={key}
+							label={message.data}
+							variant="filled"
+							color={message.clientId === drone.clientId ? 'default' : 'primary'}
+							css={chipStyles(message.clientId === drone.clientId)}
+						/>
 					))}
 				</Box>
 				<Box component="form" display="flex" flexDirection="row" gap="8px" onSubmit={handleSubmit}>
@@ -57,3 +63,8 @@ function App() {
 }
 
 export default App;
+
+const chipStyles = (currentClient: boolean) =>
+	css({
+		alignSelf: currentClient ? 'flex-end' : 'flex-start',
+	});
