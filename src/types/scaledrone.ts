@@ -1,5 +1,5 @@
 type DroneEventKey = 'open' | 'message' | 'error' | 'close' | 'disconnect' | 'reconnect';
-type DroneEventCallback = (error: Error) => void | ((event: any) => void);
+type DroneEventCallback = (data: unknown) => void;
 
 interface PublishMetadata {
 	room: string;
@@ -13,8 +13,8 @@ export interface Drone {
 	clientId: string;
 }
 
-type RoomEventKey = 'message';
-type RoomEventCallback = (message: Message) => void;
+type RoomEventKey = 'message' | 'members' | 'member_join' | 'member_leave';
+type RoomEventCallback = (data: unknown) => void;
 
 interface Room {
 	on: (eventKey: RoomEventKey, eventCallback: RoomEventCallback) => void;

@@ -9,8 +9,10 @@ const useScaledrone = () => {
 	const [messages, setMessages] = useState<Message[]>([]);
 
 	useEffect(() => {
-		room.on('message', (message: Message) => {
-			setMessages((prev) => [...prev, message]);
+		room.on('message', (message) => {
+			console.log(message);
+			setMessages((prev) => [...prev, message as Message]);
+		});
 		});
 	}, []);
 
