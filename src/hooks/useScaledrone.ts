@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { Drone, Message } from '../types/scaledrone';
 
-const useScaledrone = (userName: string) => {
+const useScaledrone = (userName: string, userColor: string) => {
 	const [messages, setMessages] = useState<Message[]>([]);
 
 	const drone: Drone = useMemo(
@@ -10,6 +10,7 @@ const useScaledrone = (userName: string) => {
 			new Scaledrone(import.meta.env.VITE_SCALEDRONE_CHANNEL_ID, {
 				data: {
 					name: userName,
+					color: userColor,
 				},
 			}),
 		[userName]
@@ -19,7 +20,6 @@ const useScaledrone = (userName: string) => {
 
 	useEffect(() => {
 		room.on('message', (message) => {
-			console.log(message);
 			setMessages((prev) => [...prev, message as Message]);
 		});
 	}, []);

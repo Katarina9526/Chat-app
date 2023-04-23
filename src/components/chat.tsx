@@ -1,15 +1,16 @@
 import { FormEvent } from 'react';
-import { Box, Button, TextField, Paper, Chip, css, Typography } from '@mui/material';
+import { Box, Button, TextField, Paper, Chip, Typography, css } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import { ChatFormElements } from '../types/formElements';
 import useScaledrone from '../hooks/useScaledrone';
 
 interface Props {
 	userName: string;
+	userColor: string;
 }
 
-const Chat = ({ userName }: Props) => {
-	const { messages, publish, currentClientId } = useScaledrone(userName);
+const Chat = ({ userName, userColor }: Props) => {
+	const { messages, publish, currentClientId } = useScaledrone(userName, userColor);
 
 	const handleSubmit = (event: FormEvent<ChatFormElements>) => {
 		event.preventDefault();
@@ -17,8 +18,6 @@ const Chat = ({ userName }: Props) => {
 		publish(event.currentTarget.elements.message.value);
 		event.currentTarget.reset();
 	};
-
-	console.log(messages);
 
 	return (
 		<Paper elevation={12}>
@@ -39,14 +38,10 @@ const Chat = ({ userName }: Props) => {
 						alignSelf={message.clientId === currentClientId ? 'flex-end' : 'flex-start'}
 						display="flex"
 						flexDirection="column">
-						<Typography component="span" fontSize="0.75rem" color="grey">{`${
+						<Typography component="span" fontSize="0.75rem" color="grey" ml="2px">{`${
 							message.member.clientData.name
 						}${message.clientId === currentClientId ? ' (me)' : ''}`}</Typography>
-						<Chip
-							label={message.data}
-							variant="filled"
-							color={message.clientId === currentClientId ? 'default' : 'primary'}
-						/>
+						<Chip label={message.data} variant="filled" css={chipStyles(message.member.clientData.color)} />
 					</Box>
 				))}
 			</Box>
@@ -68,3 +63,8 @@ const Chat = ({ userName }: Props) => {
 };
 
 export default Chat;
+
+const chipStyles = (color: string) =>
+	css({
+		backgroundColor: color,
+	});

@@ -33,5 +33,12 @@ export const mainTheme = createTheme({
 				},
 			},
 		},
+		MuiChip: {
+			styleOverrides: {
+				root: {
+					color: 'white',
+				},
+			},
+		},
 	},
 });

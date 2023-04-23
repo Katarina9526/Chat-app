@@ -5,24 +5,40 @@ import { LoginFormElements } from './types/formElements';
 import Chat from './components/chat';
 import SessionStorage from './helpers/sessionStorage';
 import Login from './components/login';
+import { getRandomColor } from './helpers/messageColors';
 
 function App() {
 	const [userName, setUserName] = useState<string | null>(null);
+	const [userColor, setUserColor] = useState<string | null>(null);
 
 	const handleLogin = (event: FormEvent<LoginFormElements>) => {
 		event.preventDefault();
 
 		if (event.currentTarget.elements.name.value.length) {
+			const userColor = getRandomColor();
+
 			SessionStorage.setUserName(event.currentTarget.elements.name.value);
+			SessionStorage.setUserColor(userColor);
 			setUserName(event.currentTarget.elements.name.value);
+			setUserColor(userColor);
 		}
 	};
 
 	useEffect(() => {
 		const userName = SessionStorage.getUserName();
+		const userColor = SessionStorage.getUserColor();
 
 		if (userName && userName.length) {
 			setUserName(userName);
+
+			if (userColor && userColor.length === 7) {
+				setUserColor(userColor);
+			} else {
+				const userColor = getRandomColor();
+
+				SessionStorage.setUserColor(userColor);
+				setUserColor(userColor);
+			}
 		}
 	}, []);
 
@@ -34,7 +50,11 @@ function App() {
 			alignItems="center"
 			padding="16px"
 			boxSizing="border-box">
-			{userName ? <Chat userName={userName} /> : <Login handleLogin={handleLogin} />}
+			{userName && userColor ? (
+				<Chat userName={userName} userColor={userColor} />
+			) : (
+				<Login handleLogin={handleLogin} />
+			)}
 		</Box>
 	);
 }

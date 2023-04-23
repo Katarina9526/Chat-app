@@ -35,4 +35,5 @@ export interface Member {
 
 interface ClientData {
 	name: string;
+	color: string;
 }
