@@ -8,5 +8,5 @@
 ## Test Environment
 ```sh
 VITE_SCALEDRONE_CHANNEL_ID = kvlduQYphaXKbsaV
-VITE_SCALEDRONE_ROOM_NAME = chat-room
+VITE_SCALEDRONE_ROOM_NAME = observable-chat-room
 ```

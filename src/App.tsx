@@ -1,18 +1,30 @@
-import { FormEvent } from 'react';
-import useScaledrone, { drone, publish } from './hooks/useScaledrone';
-import { Box, Button, TextField, Paper, Chip, css } from '@mui/material';
-import SendIcon from '@mui/icons-material/Send';
-import { CustomFormElement } from './types/formElements';
+import { FormEvent, useState, useEffect } from 'react';
+
+import { Box } from '@mui/material';
+import { LoginFormElements } from './types/formElements';
+import Chat from './components/chat';
+import SessionStorage from './helpers/sessionStorage';
+import Login from './components/login';
 
 function App() {
-	const messages = useScaledrone();
+	const [userName, setUserName] = useState<string | null>(null);
 
-	const handleSubmit = (event: FormEvent<CustomFormElement>) => {
+	const handleLogin = (event: FormEvent<LoginFormElements>) => {
 		event.preventDefault();
 
-		publish(event.currentTarget.elements.message.value);
-		event.currentTarget.reset();
+		if (event.currentTarget.elements.name.value.length) {
+			SessionStorage.setUserName(event.currentTarget.elements.name.value);
+			setUserName(event.currentTarget.elements.name.value);
+		}
 	};
+
+	useEffect(() => {
+		const userName = SessionStorage.getUserName();
+
+		if (userName && userName.length) {
+			setUserName(userName);
+		}
+	}, []);
 
 	return (
 		<Box
@@ -22,49 +34,9 @@ function App() {
 			alignItems="center"
 			padding="16px"
 			boxSizing="border-box">
-			<Paper elevation={12}>
-				<Box
-					minHeight="600px"
-					border="1px solid rgba(0, 0, 0, 0.23)"
-					mb="16px"
-					borderRadius="16px"
-					padding="8.5px 14px"
-					display="flex"
-					flexDirection="column"
-					justifyContent="flex-end"
-					alignItems="flex-start"
-					gap="8px">
-					{messages.map((message, key) => (
-						<Chip
-							key={key}
-							label={message.data}
-							variant="filled"
-							color={message.clientId === drone.clientId ? 'default' : 'primary'}
-							css={chipStyles(message.clientId === drone.clientId)}
-						/>
-					))}
-				</Box>
-				<Box component="form" display="flex" flexDirection="row" gap="8px" onSubmit={handleSubmit}>
-					<TextField
-						name="message"
-						autoComplete="off"
-						variant="outlined"
-						fullWidth
-						color="primary"
-						size="small"
-					/>
-					<Button type="submit" variant="contained" color="primary" size="large" endIcon={<SendIcon />}>
-						Send
-					</Button>
-				</Box>
-			</Paper>
+			{userName ? <Chat userName={userName} /> : <Login handleLogin={handleLogin} />}
 		</Box>
 	);
 }
 
 export default App;
-
-const chipStyles = (currentClient: boolean) =>
-	css({
-		alignSelf: currentClient ? 'flex-end' : 'flex-start',
-	});

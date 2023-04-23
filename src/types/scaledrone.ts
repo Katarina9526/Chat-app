@@ -24,6 +24,15 @@ export interface Message {
 	data: string | number;
 	id: string;
 	timestamp: number;
-	clientId?: string;
-	member?: object;
+	clientId: string;
+	member: Member;
+}
+
+export interface Member {
+	id: string;
+	clientData: ClientData;
+}
+
+interface ClientData {
+	name: string;
 }
