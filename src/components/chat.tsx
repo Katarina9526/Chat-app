@@ -1,5 +1,5 @@
 import { FormEvent } from 'react';
-import { Box, Button, TextField, Paper, Chip, Typography, css } from '@mui/material';
+import { Box, Button, TextField, Paper, Chip, Typography } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import { ChatFormElements } from '../types/formElements';
 import useScaledrone from '../hooks/useScaledrone';
@@ -41,7 +41,11 @@ const Chat = ({ userName, userColor }: Props) => {
 						<Typography component="span" fontSize="0.75rem" color="grey" ml="2px">{`${
 							message.member.clientData.name
 						}${message.clientId === currentClientId ? ' (me)' : ''}`}</Typography>
-						<Chip label={message.data} variant="filled" css={chipStyles(message.member.clientData.color)} />
+						<Chip
+							label={message.data}
+							variant="filled"
+							sx={{ backgroundColor: message.member.clientData.color }}
+						/>
 					</Box>
 				))}
 			</Box>
@@ -63,8 +67,3 @@ const Chat = ({ userName, userColor }: Props) => {
 };
 
 export default Chat;
-
-const chipStyles = (color: string) =>
-	css({
-		backgroundColor: color,
-	});
