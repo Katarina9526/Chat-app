@@ -1,62 +1,20 @@
-import { FormEvent, useState, useEffect } from 'react';
-
-import { Box } from '@mui/material';
-import { LoginFormElements } from './types/formElements';
-import Chat from './components/chat';
-import SessionStorage from './helpers/sessionStorage';
-import Login from './components/login';
-import { getRandomColor } from './helpers/messageColors';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Home from './pages/home';
+import About from './pages/about';
 
 function App() {
-	const [userName, setUserName] = useState<string | null>(null);
-	const [userColor, setUserColor] = useState<string | null>(null);
+	const router = createBrowserRouter([
+		{
+			path: '/',
+			element: <Home />,
+		},
+		{
+			path: '/about',
+			element: <About />,
+		},
+	]);
 
-	const handleLogin = (event: FormEvent<LoginFormElements>) => {
-		event.preventDefault();
-
-		if (event.currentTarget.elements.name.value.length) {
-			const userColor = getRandomColor();
-
-			SessionStorage.setUserName(event.currentTarget.elements.name.value);
-			SessionStorage.setUserColor(userColor);
-			setUserName(event.currentTarget.elements.name.value);
-			setUserColor(userColor);
-		}
-	};
-
-	useEffect(() => {
-		const userName = SessionStorage.getUserName();
-		const userColor = SessionStorage.getUserColor();
-
-		if (userName && userName.length) {
-			setUserName(userName);
-
-			if (userColor && userColor.length === 7) {
-				setUserColor(userColor);
-			} else {
-				const userColor = getRandomColor();
-
-				SessionStorage.setUserColor(userColor);
-				setUserColor(userColor);
-			}
-		}
-	}, []);
-
-	return (
-		<Box
-			minHeight="100vh"
-			display="flex"
-			justifyContent="center"
-			alignItems="center"
-			padding="16px"
-			boxSizing="border-box">
-			{userName && userColor ? (
-				<Chat userName={userName} userColor={userColor} />
-			) : (
-				<Login handleLogin={handleLogin} />
-			)}
-		</Box>
-	);
+	return <RouterProvider router={router} />;
 }
 
 export default App;
