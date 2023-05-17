@@ -7,7 +7,8 @@ function App() {
 			key: item.path,
 			path: item.path,
 			element: item.component,
-		}))
+		})),
+		{ basename: '/chat-app/' }
 	);
 
 	return <RouterProvider router={router} />;
