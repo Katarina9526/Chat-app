@@ -9,7 +9,7 @@ interface Props {
 
 const NavbarDrawer = ({ handleDrawerToggle }: Props) => (
 	<Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-		<Typography variant="h6" sx={{ my: 2 }}>
+		<Typography variant="h6" py="16px" color="primary">
 			{APP_NAME}
 		</Typography>
 		<Divider />
