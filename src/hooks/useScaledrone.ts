@@ -1,32 +1,28 @@
-import { useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
+import { Drone, Message } from '../types/scaledrone';
 
-interface Message {
-	data: string | number;
-	id: string;
-	timestamp: number;
-	clientId?: string;
-	member?: object;
-}
-
-const useScaledrone = () => {
+const useScaledrone = (userName: string, userColor: string) => {
 	const [messages, setMessages] = useState<Message[]>([]);
 
-	// @ts-ignore
-	const drone = new Scaledrone(import.meta.env.VITE_SCALEDRONE_CHANNEL_ID);
-	drone.on('open', (error: Error) => {
-		if (error) {
-			console.error(error);
-		}
-	});
+	const drone: Drone = useMemo(
+		() =>
+			// @ts-ignore
+			new Scaledrone(import.meta.env.VITE_SCALEDRONE_CHANNEL_ID, {
+				data: {
+					name: userName,
+					color: userColor,
+				},
+			}),
+		[userName]
+	);
 
-	drone.on('error', (error: Error) => {
-		console.error(error);
-	});
+	const room = useMemo(() => drone.subscribe(import.meta.env.VITE_SCALEDRONE_ROOM_NAME), []);
 
-	const room = drone.subscribe(import.meta.env.VITE_SCALEDRONE_ROOM_NAME);
-	room.on('message', (message: Message) => {
-		setMessages([...messages, message]);
-	});
+	useEffect(() => {
+		room.on('message', (message) => {
+			setMessages((prev) => [...prev, message as Message]);
+		});
+	}, []);
 
 	const publish = (message: string) => {
 		drone.publish({
@@ -35,7 +31,7 @@ const useScaledrone = () => {
 		});
 	};
 
-	return { messages, publish };
+	return { messages, publish, currentClientId: drone.clientId };
 };
 
 export default useScaledrone;
