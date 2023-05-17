@@ -27,7 +27,7 @@ const Navbar = () => {
 						sx={{ mr: 2, display: { sm: 'none' } }}>
 						<MenuIcon />
 					</IconButton>
-					<Typography variant="h6" component="h1" flexGrow={1} display={['none', 'block']}>
+					<Typography variant="h6" component="h1" flexGrow={1} display={['none', 'block']} fontSize="2rem">
 						{APP_NAME}
 					</Typography>
 					<Box display={['none', 'block']}>
@@ -38,7 +38,7 @@ const Navbar = () => {
 								LinkComponent={Link}
 								to={item.path}
 								color="primary"
-								sx={{ color: '#fff' }}>
+								sx={{ color: '#fff', fontSize: "1.125rem" }}>
 								{item.name}
 							</Button>
 						))}
