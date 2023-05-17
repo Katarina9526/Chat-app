@@ -26,6 +26,8 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+      VITE_SCALEDRONE_CHANNEL_ID: ${{ secrets.VITE_SCALEDRONE_CHANNEL_ID }}
+      VITE_SCALEDRONE_ROOM_NAME: ${{ secrets.VITE_SCALEDRONE_ROOM_NAME }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
