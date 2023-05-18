@@ -5,10 +5,11 @@ export const mainTheme = createTheme({
 		MuiPaper: {
 			styleOverrides: {
 				elevation12: {
-					maxWidth: '600px',
+					width: 'min(100%, 600px)',
 					marginInline: 'auto',
 					padding: '16px',
 					borderRadius: '16px',
+					overflow: 'hidden',
 				},
 			},
 		},
@@ -37,7 +38,14 @@ export const mainTheme = createTheme({
 			styleOverrides: {
 				root: {
 					color: 'white',
+					whiteSpace: 'normal',
+					height: 'auto',
 				},
+				label: {
+					textOverflow: 'unset',
+					whiteSpace: 'normal',
+					padding: '12px',
+				}
 			},
 		},
 	},
