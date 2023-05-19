@@ -9,7 +9,7 @@ interface Props {
 
 const Login = ({ handleLogin }: Props) => {
 	return (
-		<Paper elevation={12}>
+		<Paper elevation={12} sx={{ width: 'min(100%, 320px)', }}>
 			<Box component="form" display="flex" flexDirection="column" gap="8px" onSubmit={handleLogin}>
 				<TextField
 					name="name"
