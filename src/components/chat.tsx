@@ -41,7 +41,7 @@ const Chat = ({ userName, userColor }: Props) => {
 					},
 					'&::-webkit-scrollbar-thumb:hover': {
 						background: '#145ea8',
-					}
+					},
 				}}>
 				<Box
 					overflow="hidden"
@@ -59,9 +59,20 @@ const Chat = ({ userName, userColor }: Props) => {
 							display="flex"
 							flexDirection="column"
 							maxWidth="100%">
-							<Typography component="span" fontSize="0.75rem" color="grey" ml="2px">{`${
-								message.member.clientData.name
-							}${message.clientId === currentClientId ? ' (me)' : ''}`}</Typography>
+							<Box display="flex" flexDirection="row" fontSize="0.75rem" color="grey" ml="2px">
+								<Typography component="span">{`${message.member.clientData.name}${
+									message.clientId === currentClientId ? ' (me)' : ''
+								}`}</Typography>
+								<Typography component="span" mx="4px" aria-hidden="true">
+									&middot;
+								</Typography>
+								<Typography component="span">
+									{new Date(message.timestamp * 1000).toLocaleTimeString('hr-HR', {
+										hour: '2-digit',
+										minute: '2-digit',
+									})}
+								</Typography>
+							</Box>
 							<Chip
 								label={message.data}
 								variant="filled"
