@@ -6,6 +6,7 @@ import Chat from '../components/chat';
 import SessionStorage from '../helpers/sessionStorage';
 import Login from '../components/login';
 import { getRandomColor } from '../helpers/messageColors';
+import { colorRegex } from '../consts/regex';
 
 function Home() {
 	const [userName, setUserName] = useState<string | null>(null);
@@ -31,7 +32,7 @@ function Home() {
 		if (userName && userName.length) {
 			setUserName(userName);
 
-			if (userColor && userColor.length === 7) {
+			if (userColor && colorRegex.test(userColor)) {
 				setUserColor(userColor);
 			} else {
 				const userColor = getRandomColor();
